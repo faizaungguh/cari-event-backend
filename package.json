@@ -1,0 +1,15 @@
+{
+  "name": "server-api",
+  "version": "1.0.0",
+  "description": "Server API 'Cari Event'",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node app.js"
+  },
+  "keywords": [],
+  "author": "Ungguh Faizaturrohman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
