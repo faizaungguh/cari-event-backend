@@ -8,7 +8,128 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// Koneksi DB
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+// Model Endpoint Admin
+model Admin {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String
+  password String
+  name     String
+
+  @@map("admin")
+}
+
+// Model Endpoint Creator
+model Creator {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  username    String
+  password    String
+  creatorName String?
+  logo        String?
+  banner      String?
+  description String?
+  contact     String
+  media       String? //relation to Media | Media Sosial website, instagram, twitter
+  address     String? //relation to Address | Alamat kantor kreator
+  guarantor   String //relation to Guarantor | Penjamin Creator
+  legal       String? //relation to Legal | berisi verifikasi data NPWP dan izin Usaha
+
+  @@map("creator")
+}
+
+model Media {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("media")
+}
+
+model Address {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("address")
+}
+
+model Guarantor {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("guarantor")
+}
+
+model Legal {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("legal")
+}
+
+// Model Endpoint Customer
+model Customer {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String
+  password String
+  fullName String
+  idNumber Int    @unique
+  idImage  String
+  address  String //relation to address
+  contact  String
+
+  @@map("customer")
+}
+
+// Model Endpoint Event
+model Event {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  banner      String
+  description String
+  detail      String?
+  ticketClass String //relation to Ticket | relasi ke tabel tiket
+  eventStart  DateTime
+  eventEnd    DateTime
+  category    String //relation to Category
+  location    String //relation to Location
+  creator     String //relation to Creator
+
+  @@map("event")
+}
+
+// Model Endpoint TicketClass
+model TicketClass {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  class String
+  price Int
+
+  @@map("ticket-class")
+}
+
+// Model Category
+model Category {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("category")
+}
+
+// Model Location
+model Location {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("location")
+}
+
+// Model Endpoint Order
+model Order {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("order")
+}
+
+// Model Endpoint Transaction
+model Transaction {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("transaction")
 }
