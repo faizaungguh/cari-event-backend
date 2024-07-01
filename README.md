@@ -42,22 +42,20 @@ Repository:
 - Pinia Js
 - Axios
 
-### Repository Pusat
-
 ```bash
-git clone https://
+git clone https://github.com/faizaungguh/cari-event-docs
 ```
 
 ### Repository Backend
 
 ```bash
-git clone https://
+git clone https://github.com/faizaungguh/cari-event-backend
 ```
 
 ### Repository Frontend
 
 ```bash
-git clone https://
+git clone https://github.com/faizaungguh/cari-event-frontend
 ```
 
 ### BaseUrl
