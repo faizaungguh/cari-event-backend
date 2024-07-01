@@ -2,14 +2,21 @@
   "name": "server-api",
   "version": "1.0.0",
   "description": "Server API 'Cari Event'",
-  "main": "app.js",
+  "main": "main.js",
+  "type": "module",
   "scripts": {
-    "dev": "node app.js"
+    "dev": "node src/main.js"
   },
   "keywords": [],
   "author": "Ungguh Faizaturrohman",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "@prisma/client": "^5.16.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "path": "^0.12.7",
+    "prisma": "^5.16.1",
+    "winston": "^3.13.0"
   }
 }
