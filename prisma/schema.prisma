@@ -43,7 +43,8 @@ model Creator {
 }
 
 model Media {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  headline String //
 
   @@map("media")
 }

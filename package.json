@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Server API 'Cari Event'",
   "main": "main.js",
-  "type": "module",
   "scripts": {
     "dev": "node src/main.js"
   },
