@@ -10,105 +10,106 @@ generator client {
 
 // Koneksi DB
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 // Model Endpoint Admin
 model Admin {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       Int    @id
   username String @unique
   password String
   name     String
 
   // Relation
-  blogs Blog[]
+  blogs Blog[]//relation to blog | can see array blog that admin created
 
   @@map("admin")
 }
 
 model Blog {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  id       Int    @id
   title    String
   headline String
   content  String
-  Admin    Admin?  @relation(fields: [adminId], references: [id])
-  adminId  String? @db.ObjectId
+  Admin    Admin? @relation(fields: [adminId], references: [id])
+  adminId  Int? // can see who admin made this post
+  createdAt DateTime @updatedAt
 
   @@map("blog")
 }
 
 // Model Endpoint Creator
 model Creator {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  id          Int         @id
   username    String
   password    String
   creatorName String?
-  logo        String?
-  banner      String?
+  logo        String? //path
+  banner      String? //path
   description String?
   contact     String?
-  medias      Media[] //relation to Media | Media Sosial website, instagram, twitter
+  medias      Media[] //relation to Media | Media Sosial website, instagram, twitter etc
   addresses   Address[] //relation to Address | Alamat kantor kreator
   guarantors  Guarantor[] //relation to Guarantor | Penjamin Creator
   legals      Legal[] //relation to Legal | berisi verifikasi data NPWP dan izin Usaha
   Event       Event?      @relation(fields: [eventId], references: [id])
-  eventId     String?     @db.ObjectId
+  eventId     Int?
 
   @@map("creator")
 }
 
 model Media {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          Int      @id
   type        String
-  description String //
+  description String 
   Creator     Creator? @relation(fields: [creatorId], references: [id])
-  creatorId   String?  @db.ObjectId
+  creatorId   Int?
 
   @@map("media")
 }
 
 model Address {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         Int       @id
   street     String
   kecamatan  String
   kabupaten  String
   postalCode String
   Creator    Creator?  @relation(fields: [creatorId], references: [id])
-  creatorId  String?   @db.ObjectId
+  creatorId  Int?
   Customer   Customer? @relation(fields: [customerId], references: [id])
-  customerId String?   @db.ObjectId
+  customerId Int?
 
   @@map("address")
 }
 
-model Guarantor {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+model Guarantor { //Penjamin dari Event Creator ini
+  id        Int      @id
   name      String
   contact   String
   address   String
   idNumber  Int
   Creator   Creator? @relation(fields: [creatorId], references: [id])
-  creatorId String?  @db.ObjectId
+  creatorId Int?
 
   @@map("guarantor")
 }
 
 model Legal {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                Int      @id
   npwpId            Int
-  npwbImage         String
+  npwpImage         String //path
   legalLicense      Int
-  legalLicenseImage String
+  legalLicenseImage String //path
   Creator           Creator? @relation(fields: [creatorId], references: [id])
-  creatorId         String?  @db.ObjectId
+  creatorId         Int?
 
   @@map("legal")
 }
 
 // Model Endpoint Customer
 model Customer {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  id           Int           @id
   username     String
   password     String
   fullName     String
@@ -124,17 +125,18 @@ model Customer {
 }
 
 model Tickets {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  ticketId      String
-  Transaction   Transaction? @relation(fields: [transactionId], references: [id])
-  transactionId String?      @db.ObjectId
+  id       Int    @id
+  ticketId String
+
   Customer      Customer?    @relation(fields: [customerId], references: [id])
-  customerId    String?      @db.ObjectId
+  customerId    Int?
+  Transaction   Transaction? @relation(fields: [transactionId], references: [id])
+  transactionId Int?
 }
 
 // Model Endpoint Event
 model Event {
-  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int           @id
   title         String
   banner        String
   description   String
@@ -151,62 +153,62 @@ model Event {
 
 // Model Endpoint TicketClass
 model TicketClass {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  id        Int    @id
   class     String
   itemTotal Int
   price     Int
-  Event     Event?  @relation(fields: [eventId], references: [id])
-  eventId   String? @db.ObjectId
-  Order     Order?  @relation(fields: [orderId], references: [id])
-  orderId   String? @db.ObjectId
+  Event     Event? @relation(fields: [eventId], references: [id])
+  eventId   Int?
+  Order     Order? @relation(fields: [orderId], references: [id])
+  orderId   Int?
 
   @@map("ticket-class")
 }
 
 // Model Category
 model Category {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          Int    @id
   type        String
   describtion String
-  Event       Event?  @relation(fields: [eventId], references: [id])
-  eventId     String? @db.ObjectId
+  Event       Event? @relation(fields: [eventId], references: [id])
+  eventId     Int?
 
   @@map("category")
 }
 
 // Model Location
 model Location {
-  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  id         Int    @id
   street     String
   kecamatatn String
   kabupaten  String
   postalCode String
-  Event      Event?  @relation(fields: [eventId], references: [id])
-  eventId    String? @db.ObjectId
+  Event      Event? @relation(fields: [eventId], references: [id])
+  eventId    Int?
 
   @@map("location")
 }
 
 // Model Endpoint Order
 model Order {
-  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int           @id
   tickets       TicketClass[]
   totalPrice    Int
   Customer      Customer?     @relation(fields: [customerId], references: [id])
-  customerId    String?       @db.ObjectId
+  customerId    Int?
   Transaction   Transaction?  @relation(fields: [transactionId], references: [id])
-  transactionId String?       @db.ObjectId
+  transactionId Int?
 
   @@map("order")
 }
 
 // Model Endpoint Transaction
 model Transaction {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  Customer   Customer? @relation(fields: [customerId], references: [id])
+  id         Int       @id
   orders     Order[]
-  customerId String?   @db.ObjectId
   Tickets    Tickets[]
+  Customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId Int?
 
   @@map("transaction")
 }
