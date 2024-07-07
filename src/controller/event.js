@@ -13,7 +13,16 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {};
 
-const list = async (req, res, next) => {};
+const list = async (req, res, next) => {
+  try {
+    const payload = await event.selectAll();
+    res.status(200).json({
+      data: payload,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 const select = async (req, res, next) => {};
 

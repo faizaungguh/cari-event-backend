@@ -11,7 +11,16 @@ const add = async (req) => {
 
 const update = async () => {};
 
-const selectAll = async () => {};
+const selectAll = async () => {
+  return prismaClient.event.findMany({
+    select: {
+      id: true,
+      banner: true,
+      title: true,
+      eventEnd: true,
+    },
+  });
+};
 
 const selectId = async () => {};
 
