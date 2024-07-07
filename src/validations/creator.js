@@ -32,9 +32,14 @@ const updateValidation = Joi.object({
   contact: Joi.string().required(),
 });
 
+const deleteValidation = Joi.object({
+  id: Joi.number(),
+});
+
 export {
   signupValidation,
   selectValidation,
   signinValidation,
   updateValidation,
+  deleteValidation,
 };
