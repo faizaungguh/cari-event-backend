@@ -38,7 +38,11 @@ const update = async (id, body) => {
 
 const selectAll = async () => {
   return prismaClient.admin.findMany({
-    select: { id: true, username: true, name: true },
+    select: {
+      id: true,
+      username: true,
+      name: true,
+    },
   });
 };
 
