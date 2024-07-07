@@ -78,4 +78,10 @@ const deleteId = async (id) => {
   return await prismaClient.admin.delete({ where: { id: adminId } });
 };
 
-export default { add, update, selectAll, selectId, deleteId };
+export default {
+  add,
+  update,
+  selectAll,
+  selectId,
+  deleteId,
+};

@@ -2,6 +2,7 @@ import express from 'express';
 import admin from '../controller/actor/admin.js';
 import creator from '../controller/actor/creator.js';
 import customer from '../controller/actor/customer.js';
+import event from '../controller/event.js';
 
 const privateRouter = new express.Router();
 
@@ -12,54 +13,54 @@ privateRouter.post('/signin/creator');
 
 // Admin API
 privateRouter.post('/admin', admin.create);
-privateRouter.get('/admins', admin.list); //? Get All Admin
-privateRouter.get('/admin/:id', admin.select); //? Get Admin by Id
-privateRouter.patch('/admin/:id', admin.update); //? Update Admin by Id
-privateRouter.delete('/admin/:id', admin.drop); //? Delete Admin by Id
+privateRouter.get('/admins', admin.list);
+privateRouter.get('/admin/:id', admin.select);
+privateRouter.patch('/admin/:id', admin.update);
+privateRouter.delete('/admin/:id', admin.drop);
 
 // Category API || Only Admin can make and edit
-privateRouter.post('/category'); //? Add category
-privateRouter.patch('/category/:id'); //? Update category
-privateRouter.delete('/category/:id'); //? Delete category
+privateRouter.post('/category');
+privateRouter.patch('/category/:id');
+privateRouter.delete('/category/:id');
 
 // Customer API
 //* Admin can do too
-privateRouter.get('/customers', customer.list); //? Get All Customer || Customer & Admin can access
-privateRouter.get('/customer/:id', customer.select); //? Get Customer by Id || Customer & Admin can access
-privateRouter.delete('/customer/:id', customer.drop); //? Delete Customer by Id
+privateRouter.get('/customers', customer.list);
+privateRouter.get('/customer/:id', customer.select);
+privateRouter.delete('/customer/:id', customer.drop);
 //* Just Customer can do
-privateRouter.patch('/customer/:id'); //? Update Customer by Id
+privateRouter.patch('/customer/:id');
 
 // Creator API
-privateRouter.patch('/creator/:id'); //? Update Customer by Id
-privateRouter.delete('/creator/:id', creator.drop); //? Delete Customer by Id
+privateRouter.patch('/creator/:id');
+privateRouter.delete('/creator/:id', creator.drop);
 
 // Event API || Only Creator can Make Event
-privateRouter.post('/event'); //? Add event
-privateRouter.patch('/event/:id'); //? Update event by Id
-privateRouter.delete('/event/:id'); //? Delete event by Id
+privateRouter.post('/event', event.create);
+privateRouter.patch('/event/:id', event.update);
+privateRouter.delete('/event/:id', event.drop);
 
 // Order API || Only Customer can Make Order
-privateRouter.post('/order'); //? Add order
-privateRouter.patch('/order/:id'); //? Update order by Id
-privateRouter.delete('/order/:id'); //? Delete order by Id
+privateRouter.post('/order');
+privateRouter.patch('/order/:id');
+privateRouter.delete('/order/:id');
 //* Just Admin can do
-privateRouter.get('/orders'); //? Get All order
+privateRouter.get('/orders');
 
 // Transaction API || Only Customer can Make Transaction from Order
-privateRouter.post('/transaction'); //? Add transaction
-privateRouter.patch('/transaction/:id'); //? Update transaction by Id
-privateRouter.delete('/transaction/:id'); //? Delete transaction by Id
+privateRouter.post('/transaction');
+privateRouter.patch('/transaction/:id');
+privateRouter.delete('/transaction/:id');
 //* Just Admin can do
-privateRouter.get('/transactions'); //? Get All transaction
+privateRouter.get('/transactions');
 
 // Tickets API || Customer Ticket from Transaction
-privateRouter.get('/my_tickets'); //? Customer can see
-privateRouter.get('/tickets'); //? Creator can see || Admin and Creator
+privateRouter.get('/my_tickets');
+privateRouter.get('/tickets');
 
 // Blog API || Only Admin can make blog
-privateRouter.post('/blog'); //? Add Blog
-privateRouter.patch('/blog/:id'); //? Update blog by Id
-privateRouter.delete('/blog/:id'); //? Delete blog by Id
+privateRouter.post('/blog');
+privateRouter.patch('/blog/:id');
+privateRouter.delete('/blog/:id');
 
 export { privateRouter };
