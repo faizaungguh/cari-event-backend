@@ -25,7 +25,7 @@ privateRouter.delete('/category/:id'); //? Delete category
 // Customer API
 //* Admin can do too
 privateRouter.get('/customers', customer.list); //? Get All Customer || Customer & Admin can access
-privateRouter.get('/customer/:id'); //? Get Customer by Id || Customer & Admin can access
+privateRouter.get('/customer/:id', customer.select); //? Get Customer by Id || Customer & Admin can access
 privateRouter.delete('/customer/:id'); //? Delete Customer by Id
 //* Just Customer can do
 privateRouter.patch('/customer/:id'); //? Update Customer by Id

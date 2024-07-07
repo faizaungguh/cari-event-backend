@@ -22,7 +22,17 @@ const list = async (req, res, next) => {
   }
 };
 
-const select = async (req, res, next) => {};
+const select = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const payload = await customer.selectId(id);
+    res.status(200).json({
+      data: payload,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 const drop = async (req, res, next) => {};
 

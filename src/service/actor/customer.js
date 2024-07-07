@@ -1,6 +1,9 @@
 import { prismaClient } from '../../application/database.js';
 import { ResponseError } from '../../error/response-error.js';
-import { signupValidation } from '../../validations/customer.js';
+import {
+  selectValidation,
+  signupValidation,
+} from '../../validations/customer.js';
 import { validate } from '../../validations/validation.js';
 
 const signup = async (req) => {
@@ -35,7 +38,23 @@ const selectAll = async () => {
   });
 };
 
-const selectId = async () => {};
+const selectId = async (id) => {
+  const customer = validate(selectValidation, { id });
+  const countCustomer = await prismaClient.customer.count({
+    where: {
+      id: customer.id,
+    },
+  });
+
+  if (countCustomer === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+  return await prismaClient.customer.findUnique({
+    where: { id: customer.id },
+    // select: { username: true, name: true },
+  });
+};
 
 const deleteId = async () => {};
 
