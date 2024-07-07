@@ -3,6 +3,7 @@ import {
   createValidation,
   deleteValidation,
   selectValidation,
+  updateValidation,
 } from '../validations/category.js';
 import { ResponseError } from '../error/response-error.js';
 import { validate } from '../validations/validation.js';
@@ -31,7 +32,39 @@ const add = async (req) => {
   });
 };
 
-const update = async () => {};
+const update = async (id, body) => {
+  const categoryId = parseInt(id);
+  await validate(selectValidation, { id });
+
+  const countCategory = await prismaClient.category.count({
+    where: {
+      id: categoryId,
+    },
+  });
+
+  if (countCategory === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+  const { type, describtion } = body;
+  await validate(updateValidation, {
+    type: body.type,
+    describtion: body.describtion,
+  });
+
+  return await prismaClient.category.update({
+    where: {
+      id: categoryId,
+    },
+    data: {
+      type: type,
+      describtion: describtion,
+    },
+  });
+
+  console.log(category);
+  next();
+};
 
 const selectAll = async () => {
   return prismaClient.category.findMany({

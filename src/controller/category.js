@@ -11,7 +11,18 @@ const create = async (req, res, next) => {
   }
 };
 
-const update = async (req, res, next) => {};
+const update = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const body = req.body;
+    const payload = await category.update(id, body);
+    res.status(200).json({
+      data: payload,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 const list = async (req, res, next) => {
   try {
