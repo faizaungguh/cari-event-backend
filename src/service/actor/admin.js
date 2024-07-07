@@ -2,7 +2,7 @@ import {
   createValidation,
   deleteValidation,
   selectValidation,
-} from '../../validations/admin.js';
+} from '../../validations/actor/admin.js';
 import { prismaClient } from '../../application/database.js';
 import { validate } from '../../validations/validation.js';
 import { ResponseError } from '../../error/response-error.js';

@@ -4,7 +4,7 @@ import {
   deleteValidation,
   selectValidation,
   signupValidation,
-} from '../../validations/customer.js';
+} from '../../validations/actor/customer.js';
 import { validate } from '../../validations/validation.js';
 
 const signup = async (req) => {

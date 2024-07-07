@@ -3,6 +3,7 @@ import admin from '../controller/actor/admin.js';
 import creator from '../controller/actor/creator.js';
 import customer from '../controller/actor/customer.js';
 import event from '../controller/event.js';
+import category from '../controller/category.js';
 
 const privateRouter = new express.Router();
 
@@ -34,6 +35,13 @@ privateRouter.patch('/customer/:id');
 // Creator API
 privateRouter.patch('/creator/:id');
 privateRouter.delete('/creator/:id', creator.drop);
+
+// Category API || Only Admin can make category
+privateRouter.post('/category', category.create);
+privateRouter.get('/categories', category.list);
+privateRouter.get('/category/:id', category.select);
+privateRouter.patch('/category/:id', category.update);
+privateRouter.delete('/category/:id', category.drop);
 
 // Event API || Only Creator can Make Event
 privateRouter.post('/event', event.create);
