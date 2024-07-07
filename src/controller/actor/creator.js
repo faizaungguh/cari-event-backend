@@ -47,9 +47,23 @@ const drop = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const body = req.body;
+    const payload = await creator.updateId(id, body);
+    res.status(200).json({
+      data: payload,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   registration,
   list,
   select,
   drop,
+  update,
 };

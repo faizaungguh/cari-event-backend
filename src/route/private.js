@@ -33,7 +33,7 @@ privateRouter.delete('/customer/:id', customer.drop);
 privateRouter.patch('/customer/:id');
 
 // Creator API
-privateRouter.patch('/creator/:id');
+privateRouter.patch('/creator/:id', creator.update);
 privateRouter.delete('/creator/:id', creator.drop);
 
 // Category API || Only Admin can make category

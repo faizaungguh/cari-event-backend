@@ -54,14 +54,24 @@ const update = async (id, body) => {
     name: body.name,
   });
 
+  const checkUsername = await prismaClient.admin.count({
+    where: {
+      username: body.username,
+    },
+  });
+
+  if (checkUsername === 1) {
+    throw new ResponseError(400, `Username ${username} tidak tersedia`);
+  }
+
   return await prismaClient.admin.update({
     where: {
       id: adminId,
     },
     data: {
-      username: username,
-      password: password,
-      name: name,
+      username,
+      password,
+      name,
     },
   });
 };
