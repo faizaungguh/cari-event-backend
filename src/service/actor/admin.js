@@ -2,6 +2,7 @@ import {
   createValidation,
   deleteValidation,
   selectValidation,
+  updateValidation,
 } from '../../validations/actor/admin.js';
 import { prismaClient } from '../../application/database.js';
 import { validate } from '../../validations/validation.js';
@@ -33,7 +34,36 @@ const add = async (req) => {
 };
 
 const update = async (id, body) => {
-  // belum fix
+  const adminId = parseInt(id);
+  await validate(selectValidation, { id });
+
+  const countAdmin = await prismaClient.admin.count({
+    where: {
+      id: adminId,
+    },
+  });
+
+  if (countAdmin === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+  const { username, password, name } = body;
+  await validate(updateValidation, {
+    username: body.username,
+    password: body.password,
+    name: body.name,
+  });
+
+  return await prismaClient.admin.update({
+    where: {
+      id: adminId,
+    },
+    data: {
+      username: username,
+      password: password,
+      name: name,
+    },
+  });
 };
 
 const selectAll = async () => {

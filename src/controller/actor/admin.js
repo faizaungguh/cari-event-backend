@@ -14,12 +14,8 @@ const create = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     const id = req.params.id;
-    // const body = {
-    //   username: req.body.username,
-    //   password: req.body.password,
-    //   name: req.body.name,
-    // };
-    const payload = await admin.update(id);
+    const body = req.body;
+    const payload = await admin.update(id, body);
     res.status(200).json({
       data: payload,
     });
