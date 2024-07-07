@@ -10,9 +10,9 @@ privateRouter.post('/signin/creator');
 
 // Admin API
 privateRouter.post('/admin', admin.createAdmin);
-privateRouter.get('/admins'); //? Get All Admin
+privateRouter.get('/admins', admin.list); //? Get All Admin
 privateRouter.get('/admin/:id'); //? Get Admin by Id
-privateRouter.patch('/admin/:id'); //? Update Admin by Id
+privateRouter.patch('/admin/:username', admin.updateAdmin); //? Update Admin by Id
 privateRouter.delete('/admin/:id'); //? Delete Admin by Id
 
 // Category API || Only Admin can make and edit
