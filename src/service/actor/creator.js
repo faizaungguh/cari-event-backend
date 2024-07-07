@@ -38,6 +38,7 @@ const selectAll = async () => {
 
 const selectId = async (id) => {
   const creator = validate(selectValidation, { id });
+
   const countCreator = await prismaClient.creator.count({
     where: {
       id: creator.id,
@@ -64,6 +65,17 @@ const selectId = async (id) => {
 
 const deleteId = async (id) => {
   const creatorId = parseInt(id);
+
+  const countCreator = await prismaClient.creator.count({
+    where: {
+      id: creatorId,
+    },
+  });
+
+  if (countCreator === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
   return await prismaClient.creator.delete({ where: { id: creatorId } });
 };
 

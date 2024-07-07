@@ -58,6 +58,17 @@ const selectId = async (id) => {
 
 const deleteId = async (id) => {
   const adminId = parseInt(id);
+
+  const countAdmin = await prismaClient.admin.count({
+    where: {
+      id: adminId,
+    },
+  });
+
+  if (countAdmin === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
   return await prismaClient.admin.delete({ where: { id: adminId } });
 };
 
