@@ -1,6 +1,7 @@
 import { prismaClient } from '../../application/database.js';
 import { ResponseError } from '../../error/response-error.js';
 import {
+  deleteValidation,
   selectValidation,
   signupValidation,
 } from '../../validations/creator.js';
@@ -65,6 +66,8 @@ const selectId = async (id) => {
 
 const deleteId = async (id) => {
   const creatorId = parseInt(id);
+
+  await validate(deleteValidation, { id });
 
   const countCreator = await prismaClient.creator.count({
     where: {

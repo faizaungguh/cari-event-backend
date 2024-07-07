@@ -38,4 +38,13 @@ const updateValidation = Joi.object({
   }),
 });
 
-export { createValidation, selectValidation, updateValidation };
+const deleteValidation = Joi.object({
+  id: Joi.number(),
+});
+
+export {
+  createValidation,
+  selectValidation,
+  updateValidation,
+  deleteValidation,
+};

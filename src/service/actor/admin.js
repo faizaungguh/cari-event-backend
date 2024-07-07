@@ -1,4 +1,8 @@
-import { createValidation, selectValidation } from '../../validations/admin.js';
+import {
+  createValidation,
+  deleteValidation,
+  selectValidation,
+} from '../../validations/admin.js';
 import { prismaClient } from '../../application/database.js';
 import { validate } from '../../validations/validation.js';
 import { ResponseError } from '../../error/response-error.js';
@@ -58,6 +62,8 @@ const selectId = async (id) => {
 
 const deleteId = async (id) => {
   const adminId = parseInt(id);
+
+  await validate(deleteValidation, { id });
 
   const countAdmin = await prismaClient.admin.count({
     where: {
