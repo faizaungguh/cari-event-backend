@@ -1,5 +1,9 @@
 import { prismaClient } from '../application/database.js';
-import { createValidation, selectValidation } from '../validations/category.js';
+import {
+  createValidation,
+  deleteValidation,
+  selectValidation,
+} from '../validations/category.js';
 import { ResponseError } from '../error/response-error.js';
 import { validate } from '../validations/validation.js';
 
@@ -61,7 +65,27 @@ const selectId = async (id) => {
   });
 };
 
-const deleteId = async () => {};
+const deleteId = async (id) => {
+  const categoryId = parseInt(id);
+
+  await validate(deleteValidation, { id });
+
+  const countCategory = await prismaClient.category.count({
+    where: {
+      id: categoryId,
+    },
+  });
+
+  if (countCategory === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+  return await prismaClient.category.delete({
+    where: {
+      id: categoryId,
+    },
+  });
+};
 
 export default {
   add,

@@ -36,7 +36,17 @@ const select = async (req, res, next) => {
   }
 };
 
-const drop = async (req, res, next) => {};
+const drop = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    await category.deleteId(id);
+    res.status(200).json({
+      message: `Data dengan id ${id} Telah Dihapus`,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 export default {
   create,
