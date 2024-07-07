@@ -38,7 +38,7 @@ const update = async (id, body) => {
 
 const selectAll = async () => {
   return prismaClient.admin.findMany({
-    select: { username: true, name: true },
+    select: { id: true, username: true, name: true },
   });
 };
 
@@ -54,12 +54,15 @@ const selectId = async (id) => {
     throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
   }
 
-  const payload = await prismaClient.admin.findUnique({
+  return await prismaClient.admin.findUnique({
     where: { id: admin.id },
     select: { username: true, name: true },
   });
-
-  return payload;
 };
 
-export default { add, update, selectAll, selectId };
+const deleteId = async (id) => {
+  const adminId = parseInt(id);
+  return await prismaClient.admin.delete({ where: { id: adminId } });
+};
+
+export default { add, update, selectAll, selectId, deleteId };

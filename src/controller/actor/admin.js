@@ -1,6 +1,6 @@
 import admin from '../../service/actor/admin.js';
 
-const createAdmin = async (req, res, next) => {
+const create = async (req, res, next) => {
   try {
     const result = await admin.add(req.body);
     res.status(200).json({
@@ -11,9 +11,9 @@ const createAdmin = async (req, res, next) => {
   }
 };
 
-const updateAdmin = async (req, res, next) => {
+const update = async (req, res, next) => {
   try {
-    const id =req.params.id
+    const id = req.params.id;
     // const body = {
     //   username: req.body.username,
     //   password: req.body.password,
@@ -50,9 +50,22 @@ const select = async (req, res, next) => {
     next(e);
   }
 };
+
+const drop = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    await admin.deleteId(id);
+    res.status(200).json({
+      message: `Data dengan id ${id} Telah Dihapus`,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 export default {
-  createAdmin,
-  updateAdmin,
+  create,
+  update,
   list,
   select,
+  drop,
 };
