@@ -52,7 +52,14 @@ const selectId = async (id) => {
 
   return await prismaClient.customer.findUnique({
     where: { id: customer.id },
-    // select: { username: true, name: true },
+    select: {
+      id: true,
+      username: true,
+      fullName: true,
+      idNumber: true,
+      idImage: true,
+      contact: true,
+    },
   });
 };
 
