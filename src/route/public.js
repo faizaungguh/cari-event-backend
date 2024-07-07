@@ -10,7 +10,7 @@ publicRouter.post('/signup/creator', creator.registration);
 
 // Creator API
 publicRouter.get('/creators', creator.list);
-publicRouter.get('/creator/:id');
+publicRouter.get('/creator/:id', creator.select);
 
 // Event API
 publicRouter.get('/events');

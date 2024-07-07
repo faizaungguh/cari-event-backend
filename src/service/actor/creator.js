@@ -1,6 +1,9 @@
 import { prismaClient } from '../../application/database.js';
 import { ResponseError } from '../../error/response-error.js';
-import { signupValidation } from '../../validations/creator.js';
+import {
+  selectValidation,
+  signupValidation,
+} from '../../validations/creator.js';
 import { validate } from '../../validations/validation.js';
 
 const signup = async (req) => {
@@ -33,7 +36,34 @@ const selectAll = async () => {
   });
 };
 
+const selectId = async (id) => {
+  const creator = validate(selectValidation, { id });
+  const countCreator = await prismaClient.creator.count({
+    where: {
+      id: creator.id,
+    },
+  });
+
+  if (countCreator === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+ return await prismaClient.creator.findUnique({
+    where: { id: creator.id },
+    select: {
+      id: true,
+      username: true,
+      creatorName: true,
+      logo: true,
+      banner: true,
+      description: true,
+      contact: true,
+    },
+  });
+};
+
 export default {
   signup,
   selectAll,
+  selectId,
 };

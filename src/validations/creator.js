@@ -14,11 +14,7 @@ const signupValidation = Joi.object({
 });
 
 const selectValidation = Joi.object({
-  username: Joi.string().max(20).required().messages({
-    'string.empty': 'Username tidak boleh Kosong',
-    'string.max': `Username tidak boleh lebih dari {#limit} karakter`,
-    'any.required': 'Username harus disertakan',
-  }),
+  id: Joi.number(),
 });
 
 const signinValidation = Joi.object({
