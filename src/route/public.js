@@ -1,11 +1,12 @@
 import express from 'express';
 import customer from '../controller/actor/customer.js';
+import creator from '../controller/actor/creator.js';
 
 const publicRouter = new express.Router();
 
 // Auth || Signup Customer & Creator
 publicRouter.post('/signup/customer', customer.registrationCustomer);
-publicRouter.post('/signup/creator');
+publicRouter.post('/signup/creator', creator.registrationCreator);
 
 // Creator API
 publicRouter.get('/creators');
