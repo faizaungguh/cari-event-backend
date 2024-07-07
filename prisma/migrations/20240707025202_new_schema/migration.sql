@@ -31,7 +31,6 @@ CREATE TABLE `creator` (
     `banner` VARCHAR(191) NULL,
     `description` VARCHAR(191) NULL,
     `contact` VARCHAR(191) NULL,
-    `eventId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -172,11 +171,17 @@ CREATE TABLE `transaction` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- AddForeignKey
-ALTER TABLE `blog` ADD CONSTRAINT `blog_adminId_fkey` FOREIGN KEY (`adminId`) REFERENCES `admin`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE `_CreatorToEvent` (
+    `A` INTEGER NOT NULL,
+    `B` INTEGER NOT NULL,
+
+    UNIQUE INDEX `_CreatorToEvent_AB_unique`(`A`, `B`),
+    INDEX `_CreatorToEvent_B_index`(`B`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `creator` ADD CONSTRAINT `creator_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `event`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `blog` ADD CONSTRAINT `blog_adminId_fkey` FOREIGN KEY (`adminId`) REFERENCES `admin`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `media` ADD CONSTRAINT `media_creatorId_fkey` FOREIGN KEY (`creatorId`) REFERENCES `creator`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -219,3 +224,9 @@ ALTER TABLE `order` ADD CONSTRAINT `order_transactionId_fkey` FOREIGN KEY (`tran
 
 -- AddForeignKey
 ALTER TABLE `transaction` ADD CONSTRAINT `transaction_customerId_fkey` FOREIGN KEY (`customerId`) REFERENCES `customer`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_CreatorToEvent` ADD CONSTRAINT `_CreatorToEvent_A_fkey` FOREIGN KEY (`A`) REFERENCES `creator`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_CreatorToEvent` ADD CONSTRAINT `_CreatorToEvent_B_fkey` FOREIGN KEY (`B`) REFERENCES `event`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

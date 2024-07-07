@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@dotenvx/dotenvx':
-        specifier: ^1.5.0
-        version: 1.5.0
       '@prisma/client':
         specifier: ^4.15.0
         version: 4.16.2(prisma@4.16.2)
@@ -23,9 +20,6 @@ importers:
       joi:
         specifier: ^17.9.2
         version: 17.13.3
-      nodemon:
-        specifier: ^3.1.4
-        version: 3.1.4
       uuid:
         specifier: ^9.0.0
         version: 9.0.1
@@ -36,6 +30,9 @@ importers:
       '@babel/preset-env':
         specifier: ^7.22.5
         version: 7.24.7(@babel/core@7.24.7)
+      '@dotenvx/dotenvx':
+        specifier: ^1.5.0
+        version: 1.5.0
       '@types/bcrypt':
         specifier: ^5.0.0
         version: 5.0.2
@@ -45,6 +42,9 @@ importers:
       '@types/uuid':
         specifier: ^9.0.2
         version: 9.0.8
+      nodemon:
+        specifier: ^3.1.4
+        version: 3.1.4
       prisma:
         specifier: ^4.15.0
         version: 4.16.2

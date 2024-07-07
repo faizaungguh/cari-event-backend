@@ -22,18 +22,18 @@ model Admin {
   name     String
 
   // Relation
-  blogs Blog[]//relation to blog | can see array blog that admin created
+  blogs Blog[] //relation to blog | can see array blog that admin created
 
   @@map("admin")
 }
 
 model Blog {
-  id       Int    @id @default(autoincrement())
-    title    String
-  headline String
-  content  String
-  Admin    Admin? @relation(fields: [adminId], references: [id])
-  adminId  Int? // can see who admin made this post
+  id        Int      @id @default(autoincrement())
+  title     String
+  headline  String //path
+  content   String
+  Admin     Admin?   @relation(fields: [adminId], references: [id])
+  adminId   Int? // can see who admin made this post
   createdAt DateTime @updatedAt
 
   @@map("blog")
@@ -42,7 +42,7 @@ model Blog {
 // Model Endpoint Creator
 model Creator {
   id          Int         @id @default(autoincrement())
-    username    String
+  username    String
   password    String
   creatorName String?
   logo        String? //path
@@ -53,16 +53,15 @@ model Creator {
   addresses   Address[] //relation to Address | Alamat kantor kreator
   guarantors  Guarantor[] //relation to Guarantor | Penjamin Creator
   legals      Legal[] //relation to Legal | berisi verifikasi data NPWP dan izin Usaha
-  Event       Event?      @relation(fields: [eventId], references: [id])
-  eventId     Int?
+  events      Event[]
 
   @@map("creator")
 }
 
 model Media {
   id          Int      @id @default(autoincrement())
-    type        String
-  description String 
+  type        String
+  description String
   Creator     Creator? @relation(fields: [creatorId], references: [id])
   creatorId   Int?
 
@@ -71,7 +70,7 @@ model Media {
 
 model Address {
   id         Int       @id @default(autoincrement())
-    street     String
+  street     String
   kecamatan  String
   kabupaten  String
   postalCode String
@@ -83,9 +82,9 @@ model Address {
   @@map("address")
 }
 
-model Guarantor { //Penjamin dari Event Creator ini
+model Guarantor {
   id        Int      @id @default(autoincrement())
-    name      String
+  name      String
   contact   String
   address   String
   idNumber  Int
@@ -97,7 +96,7 @@ model Guarantor { //Penjamin dari Event Creator ini
 
 model Legal {
   id                Int      @id @default(autoincrement())
-    npwpId            Int
+  npwpId            Int
   npwpImage         String //path
   legalLicense      Int
   legalLicenseImage String //path
@@ -110,7 +109,7 @@ model Legal {
 // Model Endpoint Customer
 model Customer {
   id           Int           @id @default(autoincrement())
-    username     String
+  username     String
   password     String
   fullName     String
   idNumber     Int           @unique
@@ -125,9 +124,8 @@ model Customer {
 }
 
 model Tickets {
-  id       Int    @id @default(autoincrement())
-    ticketId String
-
+  id            Int          @id @default(autoincrement())
+  ticketId      String
   Customer      Customer?    @relation(fields: [customerId], references: [id])
   customerId    Int?
   Transaction   Transaction? @relation(fields: [transactionId], references: [id])
@@ -137,7 +135,7 @@ model Tickets {
 // Model Endpoint Event
 model Event {
   id            Int           @id @default(autoincrement())
-    title         String
+  title         String
   banner        String
   description   String
   detail        String?
@@ -154,7 +152,7 @@ model Event {
 // Model Endpoint TicketClass
 model TicketClass {
   id        Int    @id @default(autoincrement())
-    class     String
+  class     String
   itemTotal Int
   price     Int
   Event     Event? @relation(fields: [eventId], references: [id])
@@ -168,7 +166,7 @@ model TicketClass {
 // Model Category
 model Category {
   id          Int    @id @default(autoincrement())
-    type        String
+  type        String
   describtion String
   Event       Event? @relation(fields: [eventId], references: [id])
   eventId     Int?
@@ -179,7 +177,7 @@ model Category {
 // Model Location
 model Location {
   id         Int    @id @default(autoincrement())
-    street     String
+  street     String
   kecamatatn String
   kabupaten  String
   postalCode String
@@ -192,7 +190,7 @@ model Location {
 // Model Endpoint Order
 model Order {
   id            Int           @id @default(autoincrement())
-    tickets       TicketClass[]
+  tickets       TicketClass[]
   totalPrice    Int
   Customer      Customer?     @relation(fields: [customerId], references: [id])
   customerId    Int?
@@ -205,7 +203,7 @@ model Order {
 // Model Endpoint Transaction
 model Transaction {
   id         Int       @id @default(autoincrement())
-    orders     Order[]
+  orders     Order[]
   Tickets    Tickets[]
   Customer   Customer? @relation(fields: [customerId], references: [id])
   customerId Int?
