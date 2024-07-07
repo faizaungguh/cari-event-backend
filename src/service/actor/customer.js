@@ -1,6 +1,7 @@
 import { prismaClient } from '../../application/database.js';
 import { ResponseError } from '../../error/response-error.js';
 import {
+  deleteValidation,
   selectValidation,
   signupValidation,
 } from '../../validations/customer.js';
@@ -63,6 +64,22 @@ const selectId = async (id) => {
   });
 };
 
-const deleteId = async () => {};
+const deleteId = async (id) => {
+  const customerId = parseInt(id);
+  await validate(deleteValidation, { id });
+  const countCustomer = await prismaClient.customer.count({
+    where: {
+      id: customerId,
+    },
+  });
+
+  if (countCustomer === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+  return await prismaClient.customer.delete({
+    where: { id: customerId },
+  });
+};
 
 export default { signup, selectAll, selectId, deleteId };

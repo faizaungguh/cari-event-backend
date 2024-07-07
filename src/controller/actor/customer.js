@@ -34,6 +34,16 @@ const select = async (req, res, next) => {
   }
 };
 
-const drop = async (req, res, next) => {};
+const drop = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    await customer.deleteId(id);
+    res.status(200).json({
+      message: `Data dengan id ${id} Telah Dihapus`,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 export default { registration, list, select, drop };

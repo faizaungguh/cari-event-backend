@@ -63,7 +63,7 @@ const selectId = async (id) => {
 const deleteId = async (id) => {
   const adminId = parseInt(id);
 
-  await validate(deleteValidation, { id });
+  await validate(deleteValidation, adminId);
 
   const countAdmin = await prismaClient.admin.count({
     where: {
