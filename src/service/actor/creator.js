@@ -27,6 +27,13 @@ const signup = async (req) => {
   });
 };
 
+const selectAll = async () => {
+  return prismaClient.creator.findMany({
+    select: { id: true, username: true, creatorName: true },
+  });
+};
+
 export default {
   signup,
+  selectAll,
 };

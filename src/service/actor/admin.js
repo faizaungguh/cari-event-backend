@@ -1,8 +1,4 @@
-import {
-  createValidation,
-  selectValidation,
-  updateValidation,
-} from '../../validations/admin.js';
+import { createValidation, selectValidation } from '../../validations/admin.js';
 import { prismaClient } from '../../application/database.js';
 import { validate } from '../../validations/validation.js';
 import { ResponseError } from '../../error/response-error.js';

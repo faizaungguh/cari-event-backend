@@ -6,10 +6,10 @@ const publicRouter = new express.Router();
 
 // Auth || Signup Customer & Creator
 publicRouter.post('/signup/customer', customer.registrationCustomer);
-publicRouter.post('/signup/creator', creator.registrationCreator);
+publicRouter.post('/signup/creator', creator.registration);
 
 // Creator API
-publicRouter.get('/creators');
+publicRouter.get('/creators', creator.list);
 publicRouter.get('/creator/:id');
 
 // Event API
