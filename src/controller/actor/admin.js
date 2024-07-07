@@ -13,13 +13,15 @@ const createAdmin = async (req, res, next) => {
 
 const updateAdmin = async (req, res, next) => {
   try {
-    const username = req.user.username;
-    const request = req.body;
-    request.username = username;
-
-    const result = await admin.update(request);
+    const id =req.params.id
+    // const body = {
+    //   username: req.body.username,
+    //   password: req.body.password,
+    //   name: req.body.name,
+    // };
+    const payload = await admin.update(id);
     res.status(200).json({
-      data: result,
+      data: payload,
     });
   } catch (e) {
     next(e);
