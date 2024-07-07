@@ -28,7 +28,7 @@ const updateAdmin = async (req, res, next) => {
 
 const list = async (req, res, next) => {
   try {
-    const payload = await admin.selectAll(res);
+    const payload = await admin.selectAll();
     res.status(200).json({
       data: payload,
     });
@@ -37,8 +37,20 @@ const list = async (req, res, next) => {
   }
 };
 
+const select = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const payload = await admin.selectId(id);
+    res.status(200).json({
+      data: payload,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 export default {
   createAdmin,
   updateAdmin,
   list,
+  select,
 };

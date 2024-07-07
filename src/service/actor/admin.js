@@ -1,4 +1,8 @@
-import { createValidation, updateValidation } from '../../validations/admin.js';
+import {
+  createValidation,
+  selectValidation,
+  updateValidation,
+} from '../../validations/admin.js';
 import { prismaClient } from '../../application/database.js';
 import { validate } from '../../validations/validation.js';
 import { ResponseError } from '../../error/response-error.js';
@@ -88,4 +92,25 @@ const selectAll = async () => {
   });
 };
 
-export default { add, update, selectAll };
+const selectId = async (id) => {
+  const admin = validate(selectValidation, { id });
+
+  const countAdmin = await prismaClient.admin.count({
+    where: {
+      id: admin.id,
+    },
+  });
+
+  if (countAdmin === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+  const payload = await prismaClient.admin.findUnique({
+    where: { id: admin.id },
+    select: { username: true, name: true },
+  });
+
+  return payload;
+};
+
+export default { add, update, selectAll, selectId };

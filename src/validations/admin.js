@@ -18,7 +18,7 @@ const createValidation = Joi.object({
   }),
 });
 
-const selectValidation = Joi.object({});
+const selectValidation = Joi.object({ id: Joi.number() });
 
 const updateValidation = Joi.object({
   username: Joi.string().max(20).required().messages({
