@@ -1,5 +1,6 @@
 import express from 'express';
 import admin from '../controller/actor/admin.js';
+import creator from '../controller/actor/creator.js';
 
 const privateRouter = new express.Router();
 
@@ -30,7 +31,7 @@ privateRouter.patch('/customer/:id'); //? Update Customer by Id
 
 // Creator API
 privateRouter.patch('/creator/:id'); //? Update Customer by Id
-privateRouter.delete('/creator/:id'); //? Delete Customer by Id
+privateRouter.delete('/creator/:id', creator.drop); //? Delete Customer by Id
 
 // Event API || Only Creator can Make Event
 privateRouter.post('/event'); //? Add event

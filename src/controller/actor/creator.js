@@ -35,8 +35,21 @@ const select = async (req, res, next) => {
   }
 };
 
+const drop = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    await creator.deleteId(id);
+    res.status(200).json({
+      message: `Data dengan id ${id} telah dihapus`,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   registration,
   list,
   select,
+  drop,
 };

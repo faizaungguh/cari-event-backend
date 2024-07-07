@@ -48,7 +48,7 @@ const selectId = async (id) => {
     throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
   }
 
- return await prismaClient.creator.findUnique({
+  return await prismaClient.creator.findUnique({
     where: { id: creator.id },
     select: {
       id: true,
@@ -62,8 +62,14 @@ const selectId = async (id) => {
   });
 };
 
+const deleteId = async (id) => {
+  const creatorId = parseInt(id);
+  return await prismaClient.creator.delete({ where: { id: creatorId } });
+};
+
 export default {
   signup,
   selectAll,
   selectId,
+  deleteId,
 };
