@@ -111,10 +111,10 @@ model Customer {
   id           Int           @id @default(autoincrement())
   username     String
   password     String
-  fullName     String
-  idNumber     Int           @unique
-  idImage      String
-  contact      String
+  fullName     String?
+  idNumber     Int?          @unique
+  idImage      String?
+  contact      String?
   addresses    Address[] //relation to address | alamat customer
   orders       Order[] //relation to order | order apa saja yang dibuat oleh customer
   transactions Transaction[] //relation to transaction | transaksi apa saja yang telah dilakukan oleh customer

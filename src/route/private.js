@@ -1,5 +1,5 @@
 import express from 'express';
-import admin from '../controller/admin.js';
+import admin from '../controller/actor/admin.js';
 
 const privateRouter = new express.Router();
 

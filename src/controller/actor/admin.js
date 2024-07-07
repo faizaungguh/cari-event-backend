@@ -1,4 +1,4 @@
-import admin from '../service/admin.js';
+import admin from '../../service/actor/admin.js';
 
 const createAdmin = async (req, res, next) => {
   try {
