@@ -10,7 +10,7 @@ const createValidation = Joi.object({
 });
 
 const selectValidation = Joi.object({
-  id: Joi.number().required(),
+  id: Joi.number(),
 });
 
 const updateValidation = Joi.object({
@@ -23,7 +23,7 @@ const updateValidation = Joi.object({
 });
 
 const deleteValidation = Joi.object({
-  id: Joi.number().required,
+  id: Joi.number(),
 });
 
 export {

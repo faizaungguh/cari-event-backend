@@ -16,7 +16,7 @@ const add = async (req) => {
     },
   });
 
-  if (countAdmin === 0) {
+  if (countAdmin === 1) {
     throw new ResponseError(
       400,
       'Username tersebut sudah ada, pilih username lain'
@@ -63,7 +63,7 @@ const selectId = async (id) => {
 const deleteId = async (id) => {
   const adminId = parseInt(id);
 
-  await validate(deleteValidation, adminId);
+  await validate(deleteValidation, { id });
 
   const countAdmin = await prismaClient.admin.count({
     where: {
@@ -75,7 +75,11 @@ const deleteId = async (id) => {
     throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
   }
 
-  return await prismaClient.admin.delete({ where: { id: adminId } });
+  return await prismaClient.admin.delete({
+    where: {
+      id: adminId,
+    },
+  });
 };
 
 export default {
