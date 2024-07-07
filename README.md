@@ -69,3 +69,38 @@ http://localhost:3000/api/v1
 ```
 
 Menyertakan token access berupa JWT untuk Endpoint yang diproteksi
+
+## Cara untuk menjalankan
+
+harus ada mysql dan nodejs
+install semua package
+
+```bash
+npm install
+```
+
+inisiasi prisma
+
+```bash
+npx prisma init
+```
+
+generate prisma || supaya bisa dipakai PrismaClient nya
+
+```bash
+npx prisma generate
+```
+
+migrate model
+
+```bash
+npx prisma migrate dev --create-only
+```
+
+run development
+
+```bash
+npm run dev
+```
+
+lalu buka api client untuk testing

@@ -3,8 +3,8 @@ import { prismaClient } from '../application/database.js';
 import { validate } from '../validations/validation.js';
 import { ResponseError } from '../error/response-error.js';
 
-const add = async (request) => {
-  const admin = validate(createValidation, request);
+const add = async (req) => {
+  const admin = validate(createValidation, req);
 
   const countAdmin = await prismaClient.admin.count({
     where: {
