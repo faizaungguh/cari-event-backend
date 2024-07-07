@@ -1,6 +1,6 @@
 import customer from '../../service/actor/customer.js';
 
-const registrationCustomer = async (req, res, next) => {
+const registration = async (req, res, next) => {
   try {
     const result = await customer.signup(req.body);
     res.status(201).json({
@@ -11,4 +11,19 @@ const registrationCustomer = async (req, res, next) => {
   }
 };
 
-export default { registrationCustomer };
+const list = async (req, res, next) => {
+  try {
+    const payload = await customer.selectAll();
+    res.status(200).json({
+      data: payload,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const select = async (req, res, next) => {};
+
+const drop = async (req, res, next) => {};
+
+export default { registration, list, select, drop };

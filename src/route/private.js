@@ -1,6 +1,7 @@
 import express from 'express';
 import admin from '../controller/actor/admin.js';
 import creator from '../controller/actor/creator.js';
+import customer from '../controller/actor/customer.js';
 
 const privateRouter = new express.Router();
 
@@ -23,7 +24,7 @@ privateRouter.delete('/category/:id'); //? Delete category
 
 // Customer API
 //* Admin can do too
-privateRouter.get('/customers'); //? Get All Customer || Customer & Admin can access
+privateRouter.get('/customers', customer.list); //? Get All Customer || Customer & Admin can access
 privateRouter.get('/customer/:id'); //? Get Customer by Id || Customer & Admin can access
 privateRouter.delete('/customer/:id'); //? Delete Customer by Id
 //* Just Customer can do

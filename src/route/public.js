@@ -5,7 +5,7 @@ import creator from '../controller/actor/creator.js';
 const publicRouter = new express.Router();
 
 // Auth || Signup Customer & Creator
-publicRouter.post('/signup/customer', customer.registrationCustomer);
+publicRouter.post('/signup/customer', customer.registration);
 publicRouter.post('/signup/creator', creator.registration);
 
 // Creator API

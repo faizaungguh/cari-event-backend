@@ -29,4 +29,14 @@ const signup = async (req) => {
   });
 };
 
-export default { signup };
+const selectAll = async () => {
+  return prismaClient.customer.findMany({
+    select: { id: true, username: true },
+  });
+};
+
+const selectId = async () => {};
+
+const deleteId = async () => {};
+
+export default { signup, selectAll, selectId, deleteId };
