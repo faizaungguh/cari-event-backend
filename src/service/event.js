@@ -4,6 +4,7 @@ import {
   createValidation,
   deleteValidation,
   selectValidation,
+  updateValidation,
 } from '../validations/event.js';
 import { validate } from '../validations/validation.js';
 
@@ -14,7 +15,44 @@ const add = async (req) => {
   });
 };
 
-const update = async () => {};
+const update = async (id, body) => {
+  const eventId = parseInt(id);
+  await validate(selectValidation, { id });
+
+  const countEvent = await prismaClient.event.count({
+    where: {
+      id: eventId,
+    },
+  });
+
+  if (countEvent === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+  const { title, banner, description, detail, eventStart, eventEnd } = body;
+  await validate(updateValidation, {
+    title,
+    banner,
+    description,
+    detail,
+    eventStart,
+    eventEnd,
+  });
+
+  return await prismaClient.event.update({
+    where: {
+      id: eventId,
+    },
+    data: {
+      title,
+      banner,
+      description,
+      detail,
+      eventStart,
+      eventEnd,
+    },
+  });
+};
 
 const selectAll = async () => {
   return prismaClient.event.findMany({

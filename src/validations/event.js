@@ -3,7 +3,7 @@ import Joi from 'joi';
 const createValidation = Joi.object({
   title: Joi.string().required(),
   banner: Joi.string().required(),
-  description: Joi.string(),
+  description: Joi.string().required(),
   detail: Joi.string(),
   eventStart: Joi.date().greater('now').required(),
   eventEnd: Joi.date().greater('now').required(),
@@ -16,7 +16,7 @@ const selectValidation = Joi.object({
 const updateValidation = Joi.object({
   title: Joi.string().required(),
   banner: Joi.string().required(),
-  description: Joi.string(),
+  description: Joi.string().required(),
   detail: Joi.string(),
   eventStart: Joi.date().greater('now').required(),
   eventEnd: Joi.date().greater('now').required(),

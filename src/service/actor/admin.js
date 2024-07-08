@@ -49,9 +49,9 @@ const update = async (id, body) => {
 
   const { username, password, name } = body;
   await validate(updateValidation, {
-    username: username,
-    password: password,
-    name: name,
+    username,
+    password,
+    name,
   });
 
   const checkUsername = await prismaClient.admin.count({
