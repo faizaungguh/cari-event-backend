@@ -41,7 +41,7 @@ model Blog {
 
 // Model Endpoint Creator
 model Creator {
-  id          Int         @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   username    String
   password    String
   creatorName String?
@@ -50,8 +50,10 @@ model Creator {
   description String?
   contact     String?
   medias      Media[] //relation to Media | Media Sosial website, instagram, twitter etc
-  addresses   Address[] //relation to Address | Alamat kantor kreator
-  guarantors  Guarantor[] //relation to Guarantor | Penjamin Creator
+  addresses   Address?   @relation(fields: [addressId], references: [id]) //relation to Address | Alamat kantor kreator
+  addressId   Int
+  guarantors  Guarantor? @relation(fields: [guarantorId], references: [id]) //relation to Guarantor | Penjamin Creator
+  guarantorId Int
   legals      Legal[] //relation to Legal | berisi verifikasi data NPWP dan izin Usaha
   events      Event[]
 
@@ -69,27 +71,24 @@ model Media {
 }
 
 model Address {
-  id         Int       @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   street     String
   kecamatan  String
   kabupaten  String
   postalCode String
-  Creator    Creator?  @relation(fields: [creatorId], references: [id])
-  creatorId  Int?
-  Customer   Customer? @relation(fields: [customerId], references: [id])
-  customerId Int?
+  Creator    Creator[]
+  Customer   Customer[]
 
   @@map("address")
 }
 
 model Guarantor {
-  id        Int      @id @default(autoincrement())
-  name      String
-  contact   String
-  address   String
-  idNumber  String
-  Creator   Creator? @relation(fields: [creatorId], references: [id])
-  creatorId Int?
+  id       Int       @id @default(autoincrement())
+  name     String
+  contact  String
+  address  String
+  idNumber String
+  Creator  Creator[]
 
   @@map("guarantor")
 }
@@ -115,7 +114,8 @@ model Customer {
   idNumber     String?       @unique
   idImage      String?
   contact      String?
-  addresses    Address[] //relation to address | alamat customer
+  addresses    Address?      @relation(fields: [addressId], references: [id]) //relation to address | alamat customer
+  addressId    Int?
   orders       Order[] //relation to order | order apa saja yang dibuat oleh customer
   transactions Transaction[] //relation to transaction | transaksi apa saja yang telah dilakukan oleh customer
   tickets      Tickets[] //relation to tickets | tiket yang telah dibayar customer untuk ditukar di event nantinya
@@ -142,9 +142,12 @@ model Event {
   ticketClasses TicketClass[] //relation to Ticket | ada kelas tiket apa saja
   eventStart    DateTime
   eventEnd      DateTime
-  categories    Category[] //relation to Category | masuk kategori event apa
-  locations     Location[] //relation to Location
-  creators      Creator[] //relation to Creator
+  categories    Category?     @relation(fields: [categoryId], references: [id]) //relation to Category | masuk kategori event apa
+  categoryId    Int?
+  locations     Location?     @relation(fields: [locationId], references: [id]) //relation to Location
+  locationId    Int?
+  creators      Creator?      @relation(fields: [creatorId], references: [id]) //relation to Creator
+  creatorId     Int?
 
   @@map("event")
 }
@@ -165,24 +168,22 @@ model TicketClass {
 
 // Model Category
 model Category {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   type        String
   describtion String
-  Event       Event? @relation(fields: [eventId], references: [id])
-  eventId     Int?
+  Event       Event[]
 
   @@map("category")
 }
 
 // Model Location
 model Location {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   street     String
   kecamatatn String
   kabupaten  String
   postalCode String
-  Event      Event? @relation(fields: [eventId], references: [id])
-  eventId    Int?
+  Event      Event[]
 
   @@map("location")
 }
@@ -202,11 +203,21 @@ model Order {
 
 // Model Endpoint Transaction
 model Transaction {
-  id         Int       @id @default(autoincrement())
-  orders     Order[]
-  Tickets    Tickets[]
-  Customer   Customer? @relation(fields: [customerId], references: [id])
-  customerId Int?
+  id             Int                 @id @default(autoincrement())
+  orders         Order[]
+  Tickets        Tickets[]
+  status         transactions_status
+  payment_method String?
+  created_at     DateTime?
+  updated_at     DateTime?
+  Customer       Customer?           @relation(fields: [customerId], references: [id])
+  customerId     Int?
 
   @@map("transaction")
+}
+
+enum transactions_status {
+  PENDING_PAYMENT
+  PAID
+  CANCELED
 }

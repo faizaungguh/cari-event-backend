@@ -1,0 +1,26 @@
+{
+  "title": "Konser Rakyat",
+  "banner": "/public/img",
+  "description": "",
+  "detail": "",
+  "ticketClass": [
+    {
+      "class": "bronze",
+      "itemTotal": 100,
+      "price": 500000
+    },
+    {
+      "class": "silver",
+      "itemTotal": 50,
+      "price": 750000
+    },
+    {
+      "class": "gold",
+      "itemTotal": 30,
+      "price": 1000000
+    }
+  ],
+  "eventStart": "2024-08-14",
+  "eventEnd": "2024-08-15",
+  "creatorId": 1
+}
