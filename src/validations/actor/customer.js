@@ -36,22 +36,22 @@ const signinValidation = Joi.object({
 
 const updateValidation = Joi.object({
   username: Joi.string()
-  .pattern(new RegExp(/^\S+$/))
-  .trim()
-  .min(1)
-  .max(20)
-  .required()
-  .messages({
-    'string.pattern.base': 'Username tidak boleh menggunakan spasi',
-    'string.empty': 'Username tidak boleh Kosong',
-    'string.max': `Username tidak boleh lebih dari {#limit} karakter`,
-    'any.required': 'Username harus disertakan',
-  }),
+    .pattern(new RegExp(/^\S+$/))
+    .trim()
+    .min(1)
+    .max(20)
+    .required()
+    .messages({
+      'string.pattern.base': 'Username tidak boleh menggunakan spasi',
+      'string.empty': 'Username tidak boleh Kosong',
+      'string.max': `Username tidak boleh lebih dari {#limit} karakter`,
+      'any.required': 'Username harus disertakan',
+    }),
   password: Joi.string().min(6).required(),
   fullName: Joi.string().max(50).required(),
-  idNumber: Joi.string().required(),
-  idImage: Joi.string().required(),
-  contact: Joi.string().required(),
+  idNumber: Joi.string(),
+  idImage: Joi.string(),
+  contact: Joi.string(),
 });
 
 const deleteValidation = Joi.object({

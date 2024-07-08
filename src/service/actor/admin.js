@@ -49,14 +49,14 @@ const update = async (id, body) => {
 
   const { username, password, name } = body;
   await validate(updateValidation, {
-    username: body.username,
-    password: body.password,
-    name: body.name,
+    username: username,
+    password: password,
+    name: name,
   });
 
   const checkUsername = await prismaClient.admin.count({
     where: {
-      username: body.username,
+      username: username,
     },
   });
 

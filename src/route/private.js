@@ -19,18 +19,13 @@ privateRouter.get('/admin/:id', admin.select);
 privateRouter.patch('/admin/:id', admin.update);
 privateRouter.delete('/admin/:id', admin.drop);
 
-// Category API || Only Admin can make and edit
-privateRouter.post('/category');
-privateRouter.patch('/category/:id');
-privateRouter.delete('/category/:id');
-
 // Customer API
 //* Admin can do too
 privateRouter.get('/customers', customer.list);
 privateRouter.get('/customer/:id', customer.select);
 privateRouter.delete('/customer/:id', customer.drop);
 //* Just Customer can do
-privateRouter.patch('/customer/:id');
+privateRouter.patch('/customer/:id', customer.update);
 
 // Creator API
 privateRouter.patch('/creator/:id', creator.update);

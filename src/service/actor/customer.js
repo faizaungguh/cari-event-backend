@@ -4,6 +4,7 @@ import {
   deleteValidation,
   selectValidation,
   signupValidation,
+  updateValidation,
 } from '../../validations/actor/customer.js';
 import { validate } from '../../validations/validation.js';
 
@@ -35,7 +36,7 @@ const signup = async (req) => {
 
 const selectAll = async () => {
   return prismaClient.customer.findMany({
-    select: { id: true, username: true },
+    // select: { id: true, username: true },
   });
 };
 
@@ -82,4 +83,66 @@ const deleteId = async (id) => {
   });
 };
 
-export default { signup, selectAll, selectId, deleteId };
+const updateId = async (id, body) => {
+  const customerId = parseInt(id);
+  await validate(selectValidation, { id });
+  const object = { id, body };
+  console.log(object);
+  const countCustomer = await prismaClient.customer.count({
+    where: {
+      id: customerId,
+    },
+  });
+
+  if (countCustomer === 0) {
+    throw new ResponseError(404, `Data dengan id ${id} tidak ditemukan`);
+  }
+
+  const { username, password, fullName, idNumber, idImage, contact } = body;
+  // const identityId = parseInt(idNumber);
+
+  // if (isNaN(identityId)) {
+  //   throw new ResponseError(400, `Invalid idNumber: ${idNumber}`);
+  // }
+
+  await validate(updateValidation, {
+    username: username,
+    password: password,
+    fullName: fullName,
+    idNumber: idNumber,
+    idImage: idImage,
+    contact: contact,
+  });
+
+  const checkUsername = await prismaClient.customer.count({
+    where: {
+      username: username,
+    },
+  });
+
+  if (checkUsername === 1) {
+    throw new ResponseError(400, `Username ${username} tidak tersedia`);
+  }
+  console.log;
+  return await prismaClient.customer.update({
+    where: {
+      id: customerId,
+    },
+    data: {
+      username,
+      password,
+      fullName,
+      idNumber,
+      idImage,
+      contact,
+    },
+  });
+};
+
+export default {
+  signup,
+  selectAll,
+  selectId,
+  deleteId,
+  updateId,
+};
